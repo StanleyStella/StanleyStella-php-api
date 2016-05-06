@@ -20,7 +20,7 @@
 	$array = array(
 	    "sizeName" => "XXL",
 	    "colorName" => "Red", 
-	    "rangeName" => "SWEAT"
+	    "rangeName" => "TEE"
 	);
 	$stanleystella->searchMixed($array);
 
