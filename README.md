@@ -21,7 +21,7 @@ $stanleystella = new stst(array(
 ```
 ## Available methods
 
-### Get product by Size
+### Get products by Size
 
 ```php
 searchBySize($size);
