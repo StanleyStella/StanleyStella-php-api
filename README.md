@@ -13,7 +13,6 @@ PHP class for accessing Stanley &amp; Stella's API
 ### Initialize the class
 
 ```php
-
 $stanleystella = new stst(array(
 	'apiKey'      => 'pk_905198710a957531d2a3fd739226d447',
 	'apiSecret'   => 'sk_151f5ad54a7b385cb3755b11470f176e'
@@ -25,7 +24,6 @@ $stanleystella = new stst(array(
 ### Get product by Size
 
 ```php
-
 searchBySize($size);
 
 ```
