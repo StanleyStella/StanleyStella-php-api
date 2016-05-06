@@ -28,5 +28,5 @@ searchBySize($size);
 
 ```
 
-- Sizes for adult : XS, S, M, L, XL, XXL, XXXL
+- Sizes for adults : XS, S, M, L, XL, XXL, XXXL
 - Sizes for kids : 3/4, 5/6, 7/8, 9/11, 12/14
