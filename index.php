@@ -11,18 +11,11 @@
 	require_once('class/stanleystella.php');
 
 	$stanleystella = new stst(array(
-		'apiKey'      => 'pk_905198710a957531d2a3fd739226d447',
-		'apiSecret'   => 'sk_151f5ad54a7b385cb3755b11470f176e'
+		'apiKey'      => 'pk_869d1ecbe0a0c60bbfddee1fa68ab6eb',
+		'apiSecret'   => 'sk_d0b087600e6260dd35bbdaa742497c7b'
 		));
 	
-	//$stanleystella->searchBySize('XXXL');
-	
-	$array = array(
-	    "sizeName" => "XXL",
-	    "colorName" => "Red", 
-	    "rangeName" => "TEE"
-	);
-	$stanleystella->searchMixed($array);
+	$stanleystella->searchByColor('Red');
 
 	?>
 
