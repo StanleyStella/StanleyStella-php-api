@@ -11,14 +11,13 @@
 	require_once('class/stanleystella.php');
 
 	$stanleystella = new stst(array(
-		'apiKey'      => 'pk_869d1ecbe0a0c60bbfddee1fa68ab6eb',
-		'apiSecret'   => 'sk_d0b087600e6260dd35bbdaa742497c7b'
+		'apiKey'      => 'YOUR API KEY',
+		'apiSecret'   => 'YOUR SECRET API KEY'
 		));
 	
-	$stanleystella->searchByColor('Red');
+	
 
 	?>
-
 
 </body>
 </html>

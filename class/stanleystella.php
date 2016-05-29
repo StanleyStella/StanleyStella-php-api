@@ -53,7 +53,7 @@ class stst{
 	/* Search by colorTypeName */
 	public function searchByColorType($value){
 		$value = $this->spaceManage($value);
-		$result = $this->callApi('colorTypeName='.$value);
+		$result = $this->callApi('colorCategoryName='.$value);
 		return $result;
 	}
 
@@ -72,7 +72,7 @@ class stst{
 
 	/* Search by genderName */
 	public function searchByGender($value){
-		$result = $this->callApi('genderName='.$value);
+		$result = $this->callApi('genderCode='.$value);
 		return $result;
 	}
 
@@ -90,11 +90,11 @@ class stst{
 	}
 
 	/* Search by certificationName */
-	public function searchByCertification($value){
-		$value = $this->spaceManage($value);
-		$result = $this->callApi('certificationName='.$value);
-		return $result;
-	}
+	// public function searchByCertification($value){
+	// 	$value = $this->spaceManage($value);
+	// 	$result = $this->callApi('certificationName='.$value);
+	// 	return $result;
+	// }
 
 	/* Mixed search */
 	public function searchMixed($array){
