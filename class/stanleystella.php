@@ -16,7 +16,7 @@
 class stst{
 
 	/* The API base URL. */
-	const API_URL = 'http://stanleystellaapi.cloudapp.net';
+	const API_URL = 'http://api.stanleystella.com';
 
 	/* The public API Key. */
 	private $_apikey;
@@ -35,6 +35,11 @@ class stst{
 		} else {
 			throw new StanleyStellaException('Error: __construct() - Configuration data is missing.');
 		}
+	}
+
+	public function getProducts(){
+		$result = $this->callApi(null);
+		return $result;
 	}
 
 	/* Search by id */
@@ -82,20 +87,6 @@ class stst{
 		return $result;
 	}
 
-	/* Search by sizeName */
-	public function searchBySize($value){
-		$value = $this->upper($value);
-		$result = $this->callApi('sizeName='.$value);
-		return $result;
-	}
-
-	/* Search by certificationName */
-	// public function searchByCertification($value){
-	// 	$value = $this->spaceManage($value);
-	// 	$result = $this->callApi('certificationName='.$value);
-	// 	return $result;
-	// }
-
 	/* Mixed search */
 	public function searchMixed($array){
 		$i = 0;
@@ -114,7 +105,12 @@ class stst{
 
 	protected function callApi($query){
 
-		$apiCall = self::API_URL . '/api/v1/products?' . $query;
+		if($query == null){
+			$apiCall = self::API_URL . '/api/v1/products';
+		}else{
+			$apiCall = self::API_URL . '/api/v1/products?' . $query;
+		}
+		
 		$headerData = array(
 			'method'=>"GET",
 			'header'=>"Authorization: Bearer ".$this->getApiKey()."",
