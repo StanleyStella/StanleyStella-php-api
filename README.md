@@ -14,8 +14,8 @@ PHP class for accessing Stanley &amp; Stella's API
 
 ```php
 $stanleystella = new stst(array(
-	'apiKey'      => 'pk_905198710a957531d2a3fd739226d447',
-	'apiSecret'   => 'sk_151f5ad54a7b385cb3755b11470f176e'
+	'apiKey'      => 'YOUR PUBLIC API',
+	'apiSecret'   => 'YOUR SECRET API'
 ));
 
 ```
