@@ -13,18 +13,17 @@
  * @license  GNU GENERAL PUBLIC LICENSE
  */
 
-class stst{
+class Stst {
 
-	/* The API base URL. */
-	const API_URL = 'http://api.stanleystella.com';
+	// The API base HOST
+	const API_SCHEME = 'http';
+	const API_HOST = 'api.stanleystella.com';
+	const API_PRODUCTS_PATH = 'api/v1/products';
 
-	/* The public API Key. */
+	// The public API Key
 	private $_apikey;
 
-	/* The Private API key */
-	private $_apisecret;
-
-	/* Default construct  */
+	// Default construct
 	public function __construct($config)
 	{
 		if (is_array($config)) {
@@ -33,140 +32,118 @@ class stst{
 		} elseif (is_string($config)) {
 			$this->setApiKey($config);
 		} else {
-			throw new StanleyStellaException('Error: __construct() - Configuration data is missing.');
+			throw new Exception('Error: __construct() - Configuration data is missing.');
 		}
 	}
 
-	public function getProducts(){
-		$result = $this->callApi(null);
-		return $result;
+	// Search by id
+	public function searchById ($value, $offset, $limit)
+	{
+		return $this->search([ 'id' => $value ], $offset, $limit);
 	}
 
-	/* Search by id */
-	public function searchById($value){
-		$result = $this->callApi('id='.$value);
-		return $result;
+	// Search by colorName
+	public function searchByColor ($value, $offset, $limit)
+	{
+		return $this->search([ 'colorName' => $value ], $offset, $limit);
 	}
 
-	/* Search by colorName */
-	public function searchByColor($value){
-		$value = $this->spaceManage($value);
-		$result = $this->callApi('colorName='.$value);
-		return $result;
+	// Search by colorTypeName
+	public function searchByColorCode ($value, $offset, $limit)
+	{
+		return $this->search([ 'colorCode' => $value ], $offset, $limit);
 	}
 
-	/* Search by colorTypeName */
-	public function searchByColorType($value){
-		$value = $this->spaceManage($value);
-		$result = $this->callApi('colorCategoryName='.$value);
-		return $result;
+	// Search by colorTypeName
+	public function searchByColorType ($value, $offset, $limit)
+	{
+		return $this->search([ 'colorCategoryName' => $value ], $offset, $limit);
 	}
 
-	/* Search by colorTypeName */
-	public function searchByColorCode($value){
-		$result = $this->callApi('colorCode='.$value);
-		return $result;
+	// Search by fitName
+	public function searchByFit ($value, $offset, $limit)
+	{
+		return $this->search([ 'fitName' => $value ], $offset, $limit);
 	}
 
-	/* Search by fitName */
-	public function searchByFit($value){
-		$value = $this->spaceManage($value);
-		$result = $this->callApi('fitName='.$value);
-		return $result;
+	// Search by genderCode
+	public function searchByGender ($value, $offset, $limit)
+	{
+		return $this->search([ 'genderCode' => $value ], $offset, $limit);
 	}
 
-	/* Search by genderName */
-	public function searchByGender($value){
-		$result = $this->callApi('genderCode='.$value);
-		return $result;
+	// Search by sizeName
+	public function searchBySize ($value, $offset, $limit)
+	{
+		return $this->search([ 'sizeName' => $value ], $offset, $limit);
 	}
 
-	/* Search by rangeName */
-	public function searchByRange($value){
-		$result = $this->callApi('rangeName='.$value);
-		return $result;
+	// Search by rangeName
+	public function searchByRange ($value, $offset, $limit)
+	{
+		return $this->search([ 'rangeName' => $value ], $offset, $limit);
 	}
 
-	/* Mixed search */
-	public function searchMixed($array){
-		$i = 0;
-		$numItems = count($array);
-		$search = '';
-		foreach ($array as $key => $value) {
-			if (++$i === $numItems) {
-				$search .= $key.'='.$value.'';        
-			}else{
-				$search .= $key.'='.$value.'&';
-			}
-		}
-		$result = $this->callApi($search);
-		return $result;
-	}
+	// Search with any filters
+	public function search ($filters, $offset, $limit)
+	{
+		$filters['offset'] = $offset;
+		$filters['limit'] = $limit;
 
-	protected function callApi($query){
-
-		if($query == null){
-			$apiCall = self::API_URL . '/api/v1/products';
-		}else{
-			$apiCall = self::API_URL . '/api/v1/products?' . $query;
-		}
+		$url = (
+			self::API_SCHEME .
+			'://' .
+			self::API_HOST .
+			'/' .
+			self::API_PRODUCTS_PATH .
+			'?' .
+			http_build_query($filters)
+		);
 		
-		$headerData = array(
-			'method'=>"GET",
-			'header'=>"Authorization: Bearer ".$this->getApiKey()."",
-			'Content-Type: application/json',
-			'Accept: application/json'
-			);
+		$headerData = [
+			'Authorization: Bearer ' . $this->getApiKey() . '',
+			'Content-Type: application/json'
+		];
+
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $apiCall);
+
+		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headerData);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 90);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 
 		$result = curl_exec($ch);
 
 		curl_close($ch);
+
 		return json_decode($result);
 	}
 
-	/* API Key Setter */
-	public function setApiKey($apiKey)
+	// API Key Setter
+	public function setApiKey ($apiKey)
 	{
-		$this->_apikey = $apiKey;
+		$this->_apiKey = $apiKey;
 	}
 
-	/* API Key Getter */
-	public function getApiKey()
+	// API Key Getter
+	public function getApiKey ()
 	{
-		return $this->_apikey;
+		return $this->_apiKey;
 	}
 
-	/* API private Key Setter */
-	public function setApiSecret($apiSecret)
+	// API Secret Setter
+	public function setApiSecret ($apiSecret)
 	{
-		$this->_apisecret = $apiSecret;
+		$this->_apiSecret = $apiSecret;
 	}
 
-	/* API private Key Getter */
-	public function getApiSecret()
+	// API Secret Getter
+	public function getApiSecret ()
 	{
-		return $this->_apisecret;
-	}
-
-	public function spaceManage($string)
-	{
-		$string = preg_replace('/\s+/', '%20', $string);
-		return $string;
-	}
-
-	public function upper($string){
-		$string = strtoupper($string);
-		return $string;
+		return $this->_apiSecret;
 	}
 }
-
 
 ?>

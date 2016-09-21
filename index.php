@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>PHP SDK</title>
+	<title>Stanley &amp; Stella PHP SDK</title>
 </head>
 <body>
-	
 	<?php 
-
 	require_once('class/stanleystella.php');
 
-	$stanleystella = new stst(array(
-		'apiKey'      => 'YOUR PUBLIC API',
-		'apiSecret'   => 'YOUR SECRET API'
-		));
+	$stst = new Stst([
+		'apiKey' => 'YOUR PUBLIC API KEY',
+		'apiSecret' => 'YOUR SECRET API KEY'
+	]);
 
+	$response = $stst->search([], 0, 10);
+
+	var_dump($response);
 	?>
 </body>
 </html>
